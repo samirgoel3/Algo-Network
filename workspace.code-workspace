@@ -1,0 +1,33 @@
+{
+	"folders": [
+		{
+			"name": "algoss",
+			"path": "../algoss"
+		},
+		{
+			"name": "assets",
+			"path": "../AlgoNetworkReactnative/assets"
+		},
+		{
+			"name": "common-components",
+			"path": "../AlgoNetworkReactnative/common-components"
+		},
+		{
+			"name": "constants-data",
+			"path": "../AlgoNetworkReactnative/constants-data"
+		},
+		{
+			"name": "navigations",
+			"path": "../AlgoNetworkReactnative/navigations"
+		},
+		{
+			"name": "screens",
+			"path": "../AlgoNetworkReactnative/screens"
+		},
+		{
+			"name": "utils",
+			"path": "../AlgoNetworkReactnative/utils"
+		}
+	],
+	"settings": {}
+}
