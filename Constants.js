@@ -86,6 +86,7 @@ export const Screens = {
     TabScreen:'TabScreen',
     ChatScreen: 'ChatScreen',
     LoginScreen: 'LoginScreen',
+    SplashScreen: 'SplashScreen',
 
 }
 

@@ -7,45 +7,58 @@
  */
 
 import type {Node} from 'react';
-import React from 'react';
-import GetStartedScreen from './screens/gettingStartScreen/GetStartedScreen';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SignUpScreen from './screens/signupScreen/SignUpScreen';
-import TabScreen from './navigations/TabScreen';
-import {Colors, FONT, ICONS, Screens} from './Constants';
-import {Text} from 'react-native';
-import ChatScreen from './screens/chat-screen';
-import LoginScreen from './screens/loginScreen';
-
+import {ActivityIndicator, View} from 'react-native';
+import AuthStack from './navigations/AuthStack';
+import AppStack from './navigations/AppStack';
+import MyContext from './context';
 
 const App: () => Node = () => {
 
-    const Stack = createNativeStackNavigator();
+    const [isLoading, setLoading] = React.useState(true)
+    const [isLoggedIn, setLogin] = React.useState(false)
+
+    useEffect(()=>{
+        setTimeout(()=>{
+            setLoading(false)
+        }, 3000)
+    }, [])
+
+    const authContext = React.useMemo(()=>(
+        {
+            onSignIn: ()=>{
+                setLoading(false)
+                setLogin(true)
+            },
+            onLogOut: ()=>{
+                setLoading(false)
+                setLogin(false)
+            },
+            onSignUp: ()=>{
+                setLoading(false)
+                setLogin(true)
+            }
+        }
+    ))
+
+
+    if(isLoading){
+        return (
+            <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
+                <ActivityIndicator size={'large'}/>
+            </View>
+        )
+    }
 
 
     return (
-        <NavigationContainer>
-            <Stack.Navigator  initialRouteName={Screens.GetStartedScreen} screenOptions={{
-                headerStyle: {backgroundColor: Colors.GREEN_BACKGROUND},
-                headerRight: () => (<ICONS.NotificationBell onPress={() => alert('This is a button!')} width={20} height={20} color='#fff'/>),
-                headerLeft: () => (<Text style={{color: Colors.GREEN_LIGHT, fontFamily: FONT.EXTRA_BOLD, fontSize: 20}} onPress={() => alert('This is Algo Network')} > Algo Network</Text>),
-            }}>
-                <Stack.Screen name={Screens.GetStartedScreen} component={GetStartedScreen} options={{headerShown:false}}/>
-                <Stack.Screen name={Screens.SignUpScreen} component={SignUpScreen} options={{headerShown:false}}/>
-                <Stack.Screen name={Screens.LoginScreen} component={LoginScreen} options={{headerShown:false}}/>
-                <Stack.Screen name={Screens.TabScreen}
-                              component={TabScreen}
-                              options={{headerShown:true, headerTitle:'',}}
-                />
-                <Stack.Screen
-                    name={Screens.ChatScreen}
-                    component={ChatScreen}
-                    options={{
-                        headerShown:true,
-                        headerTitle:''}}/>
-            </Stack.Navigator>
-        </NavigationContainer>
+        <MyContext.AuthContext.Provider value={authContext}>
+            <NavigationContainer>
+                {isLoggedIn? <AppStack/>:<AuthStack/> }
+            </NavigationContainer>
+        </MyContext.AuthContext.Provider>
+
     );
 };
 

@@ -4,17 +4,19 @@ import {Colors, FONT, ICON_NAME, Screens} from '../../Constants';
 import Input from '../../common-components/Input';
 import Button from '../../common-components/Button';
 import Loader from '../../common-components/Loader';
+import {useNavigation} from '@react-navigation/native';
+import MyContext from '../../context';
 
-const LoginScreenScreen = ({navigation})=>{
+const LoginScreenScreen = ()=>{
+    const {onSignIn} = React.useContext(MyContext.AuthContext)
+    const navigation = useNavigation();
 
     const [inputs, setInputs] = React.useState({
         email:"",
-        username:"",
         password:""
     });
     const [error,setError] = React.useState({
         email:"",
-        username:"",
         password:""
     })
     const [isLoading, setLoader] = React.useState(false);
@@ -26,10 +28,6 @@ const LoginScreenScreen = ({navigation})=>{
 
     function handleError(text, errorKey){
         setError(prevState => ({...prevState, [errorKey]: text}))
-    }
-
-    const handleOnSignUpClick = ()=>{
-        navigation.navigate(Screens.SignUpScreen)
     }
 
     const validate = () => {
@@ -44,12 +42,6 @@ const LoginScreenScreen = ({navigation})=>{
             isValid = false;
         }
 
-        if (!inputs.username) {
-            handleError('Please input full name', 'username');
-            isValid = false;
-        }
-
-
         if (!inputs.password) {
             handleError('Please input password', 'password');
             isValid = false;
@@ -59,17 +51,22 @@ const LoginScreenScreen = ({navigation})=>{
         }
 
         if (isValid) {
-            register();
+            login();
         }
     };
 
-    const register = () => {
+
+    const handleOnSignUpClick = ()=>{
+        navigation.navigate(Screens.SignUpScreen)
+    }
+
+    const login = () => {
 
         setLoader(true)
         setTimeout(() => {
             try {
                 setLoader(false);
-                navigation.replace(Screens.TabScreen);
+                onSignIn()
             } catch (error) {
                 alert('Error', 'Something went wrong');
             }
@@ -94,7 +91,7 @@ const LoginScreenScreen = ({navigation})=>{
                        iconName={ICON_NAME.Lock}
                        error={error.password}
                        password={true}
-                       placeholder={'Create Password'}
+                       placeholder={'Enter your password'}
                        onChangeText={ (val)=>{ handleInputs(val,'password')}}
                 />
 
@@ -106,7 +103,7 @@ const LoginScreenScreen = ({navigation})=>{
                     style={{ fontFamily:FONT.REGULAR, color:Colors.GREY, fontSize:14, alignSelf:'center'}}
                     onPress={()=>{handleOnSignUpClick()}}>
                     Don't have an account
-                    <Text style={{fontFamily:FONT.BOLD, color:Colors.GREEN_BACKGROUND}}>Sign up</Text>
+                    <Text style={{fontFamily:FONT.BOLD, color:Colors.GREEN_BACKGROUND}}> Sign up</Text>
                 </Text>
 
             </View>
