@@ -13,16 +13,18 @@ import {ActivityIndicator, View} from 'react-native';
 import AuthStack from './navigations/AuthStack';
 import AppStack from './navigations/AppStack';
 import MyContext from './context';
+import {Provider} from 'react-redux';
+import {store} from './states';
 
 const App: () => Node = () => {
 
     const [isLoading, setLoading] = React.useState(true)
-    const [isLoggedIn, setLogin] = React.useState(false)
+    const [isLoggedIn, setLogin] = React.useState(true)
 
     useEffect(()=>{
         setTimeout(()=>{
             setLoading(false)
-        }, 3000)
+        }, 2000)
     }, [])
 
     const authContext = React.useMemo(()=>(
@@ -53,14 +55,13 @@ const App: () => Node = () => {
 
 
     return (
-        <MyContext.AuthContext.Provider value={authContext}>
+        <Provider store={store}>
             <NavigationContainer>
                 {isLoggedIn? <AppStack/>:<AuthStack/> }
             </NavigationContainer>
-        </MyContext.AuthContext.Provider>
+        </Provider>
 
     );
 };
-
 
 export default App;
