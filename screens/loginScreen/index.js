@@ -1,15 +1,21 @@
 import React from 'react';
-import {Keyboard, Text, View, StyleSheet} from 'react-native';
+import {Keyboard, Text, View} from 'react-native';
 import {Colors, FONT, ICON_NAME, Screens} from '../../Constants';
 import Input from '../../common-components/Input';
 import Button from '../../common-components/Button';
 import Loader from '../../common-components/Loader';
 import {useNavigation} from '@react-navigation/native';
-import MyContext from '../../context';
+import {useDispatch} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {actions} from '../../states/action-creators';
 
 const LoginScreenScreen = ()=>{
-    const {onSignIn} = React.useContext(MyContext.AuthContext)
     const navigation = useNavigation();
+
+    const dispatch = useDispatch()
+    // const notificationAction = bindActionCreators(actions.notificationActions, dispatch)
+    // const authAction = bindActionCreators(actions.authenticationActions, dispatch)
+
 
     const [inputs, setInputs] = React.useState({
         email:"",
@@ -66,7 +72,7 @@ const LoginScreenScreen = ()=>{
         setTimeout(() => {
             try {
                 setLoader(false);
-                onSignIn()
+                dispatch(actions.authenticationActions.onLogin(inputs.email, inputs.password))
             } catch (error) {
                 alert('Error', 'Something went wrong');
             }
@@ -97,7 +103,7 @@ const LoginScreenScreen = ()=>{
 
 
                 <Button title={'Login'}
-                        onPress={()=>{ handleOnContinue()}}/>
+                        onPress={()=>{handleOnContinue()}}/>
 
                 <Text
                     style={{ fontFamily:FONT.REGULAR, color:Colors.GREY, fontSize:14, alignSelf:'center'}}

@@ -1,5 +1,5 @@
  const updateNotificationCount = (count)=>{
-    return (dispatch) =>{
+    return async ( dispatch) =>{
         dispatch({
             type:'update_count',
             payload:count
@@ -8,7 +8,7 @@
 }
 
  const clearNotificationCount = ()=>{
-    return (dispatch) =>{``
+    return async (dispatch) =>{
         dispatch({
             type:'clear_notification_count',
             payload:0

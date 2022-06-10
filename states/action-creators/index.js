@@ -1,2 +1,6 @@
 import notificationActions from './NotificationActions';
-export default notificationActions;
+import authenticationActions from './AuthenticationActions';
+
+export const actions = {notificationActions, authenticationActions}
+
+
