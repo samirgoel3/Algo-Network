@@ -9,9 +9,9 @@
 import type {Node} from 'react';
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import OverAllStack from './navigations';
+import OverAllStack from './src/navigations';
 import {Provider, useDispatch} from 'react-redux';
-import {store} from './states';
+import {store} from './src/states';
 
 
 const App: () => Node = () => {

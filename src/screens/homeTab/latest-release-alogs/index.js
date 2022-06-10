@@ -11,7 +11,7 @@ const LatestReleaseAlgos = ()=>{
             <View style={styles.rootView}>
                 {Mock.MockData.latest_algos.map((item, index)=>{
                     return(
-                        <View style={{padding:8}}>
+                        <View style={{padding:8}} key={index}>
                             <Text style={styles.problemText} numberOfLines={3} ellipsizeMode={'tail'}>{item.problem_statement}</Text>
                             <View style={{flexDirection:'row', marginTop:20, justifyContent:'space-between', alignItems:'center'}}>
                                 <View style={{flexDirection:'row'}}>

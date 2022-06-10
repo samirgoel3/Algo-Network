@@ -9,7 +9,7 @@ const FavouriteCategoryItem = ({element})=>{
         <View>
             {element.map((item, index)=>{
                 return(
-                    <View style={[styles.blockLayout ]}>
+                    <View style={[styles.blockLayout ]} key={index}>
                         <Text style={styles.textStyle}
                               numberOfLines={3}
                               ellipsizeMode={'tail'}
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         backgroundColor:Colors.GREEN_BACKGROUND_LIGHT
     },
     textStyle:{
-        fontsize:18,
+        fontSize:13,
         fontFamily:FONT.REGULAR,
         color:Colors.WHITE
     }

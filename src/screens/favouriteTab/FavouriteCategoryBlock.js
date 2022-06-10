@@ -8,7 +8,7 @@ const FavouriteCategoryBlock  = ({element})=>{
         <View >
             {element.map((item, index)=>{
                return(
-                   <View>
+                   <View key={index}>
                        <Text style={styles.headerText}>{"Favourites in "+item.category_name}</Text>
                        <View style={styles.blockLayout}><FavouriteCategoryItem element={item.algos}/></View>
                    </View>

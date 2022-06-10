@@ -11,8 +11,15 @@ const ChatWindow = ({messages})=>{
         <View style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
             <ScrollView showsHorizontalScrollIndicator={false}>
                 { messages.map((item, index)=>{
-                    if(item.type == 'SENDER'){ return (<SenderMessageView element={item}/>)}
-                    else if(item.type === 'RECEIVER' ){ return(<ReceiverMessageView element={item}/>)}
+                    if(item.type == 'SENDER'){
+                        return (
+                            <View key={index}><SenderMessageView element={item}/></View>
+
+                        )}
+                    else if(item.type === 'RECEIVER' ){
+                        return(
+                            <View key={index}><ReceiverMessageView element={item}/></View>
+                        )}
                 })}
             </ScrollView>
         </View>

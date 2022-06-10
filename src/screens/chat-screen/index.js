@@ -3,9 +3,11 @@ import {Image, Text, View, StyleSheet, ScrollView, SafeAreaView} from 'react-nat
 import {Colors, FONT, ICONS} from '../../Constants';
 import ChatWindow from './ChatWindow';
 import MessageInputView from './MessageInputView';
+import {useNavigation} from '@react-navigation/native';
 
+const ChatScreen = ()=>{
 
-const ChatScreen = ({navigation})=>{
+    const navigation = useNavigation();
 
     const setHeader = ()=>{
         navigation.setOptions({
