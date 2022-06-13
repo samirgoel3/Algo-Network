@@ -1,19 +1,19 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {Colors} from '../Constants';
+import {Text, TouchableOpacity} from 'react-native';
+import {Colors, FONT} from '../Constants';
 
-const Chip = ({value, color})=>{
+const Chip = ({value, color, textColor, onPress = () => {}})=>{
     return(
-        <View style={{ borderRadius:15,
+        <TouchableOpacity style={{ borderRadius:15,
             backgroundColor:color?color:'#bbbbbb',
             paddingLeft:10,
             paddingRight:10,
             paddingTop:5,
             paddingBottom:5,
             marginRight:5
-        }}>
-            <Text style={{ fontSize:10, color:Colors.WHITE}}> {value}</Text>
-        </View>
+        }} onPress={onPress} activeOpacity={0.8}>
+            <Text style={{ fontSize:13, color:textColor?textColor:Colors.WHITE, fontFamily:FONT.REGULAR}}> {value}</Text>
+        </TouchableOpacity>
     );
 }
 

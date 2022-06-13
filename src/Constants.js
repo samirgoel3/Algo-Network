@@ -16,6 +16,8 @@ import StarSelected from '../assets/icons/star-selected.svg';
 import StartUnselected from '../assets/icons/star-unselected.svg';
 import BackArrowWhite from '../assets/icons/back-arrow-white.svg';
 import Send from '../assets/icons/send-white.svg';
+import Up from '../assets/icons/up.svg';
+import Down from '../assets/icons/down.svg';
 
 
 export const Colors = {
@@ -57,6 +59,8 @@ export const ICONS = {
     StartUnselected:StartUnselected,
     BackArrowWhite:BackArrowWhite,
     Send:Send,
+    Up:Up,
+    Down:Down,
 
 }
 
@@ -87,6 +91,8 @@ export const Screens = {
     ChatScreen: 'ChatScreen',
     LoginScreen: 'LoginScreen',
     SplashScreen: 'SplashScreen',
+    SpecificAlgoScreen: 'SpecificAlgoScreen',
+
 
 }
 

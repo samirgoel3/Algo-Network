@@ -5,14 +5,14 @@ import {Text, View} from 'react-native';
 import TabScreen from './TabScreen';
 import ChatScreen from '../screens/chat-screen';
 import {useSelector} from 'react-redux';
+import SpecificAlgoScreen from '../screens/specific-algo-screen';
 
 const AppStack = ()=>{
     const Stack = createNativeStackNavigator();
     const stateData = useSelector(state => state)
 
     return(
-        <Stack.Navigator
-            initialRouteName={Screens.TabScreen} screenOptions={{
+        <Stack.Navigator initialRouteName={Screens.TabScreen} screenOptions={{
             headerStyle: {backgroundColor: Colors.GREEN_BACKGROUND},
             headerRight: () => (
                 <View style={{flexDirection:'row', alignItems:'center', backgroundColor:Colors.GREEN_BACKGROUND_LIGHT, borderRadius:10, padding:5}}>
@@ -28,12 +28,19 @@ const AppStack = ()=>{
                           component={TabScreen}
                           options={{headerShown:true, headerTitle:'',}}
             />
+
+            <Stack.Screen name={Screens.SpecificAlgoScreen}
+                          component={SpecificAlgoScreen}
+                          options={{headerShown:true, headerTitle:'',}}
+            />
+
             <Stack.Screen
                 name={Screens.ChatScreen}
                 component={ChatScreen}
                 options={{
                     headerShown:true,
                     headerTitle:''}}/>
+
         </Stack.Navigator>
     )
 }
