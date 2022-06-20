@@ -3,8 +3,9 @@ import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-n
 import {FONT, Screens} from '../../Constants';
 import remoteConfig from '@react-native-firebase/remote-config';
 
-
 const GetStartScreen = (props)=>{
+
+
     return<View style={styles.rootView}>
         <ImageBackground style={{ width:'100%', height:'100%'}}
                          resizeMode={'cover'}
@@ -18,7 +19,7 @@ const GetStartScreen = (props)=>{
                                       props.navigation.replace(Screens.LoginScreen)
                                       // test()
                                   }}>
-                    <Text style={{color:'#02191B', fontSize:25, fontWeight:'700', fontFamily:'Nunito-Medium'}}>Get Started</Text>
+                    <Text style={{color:'#02191B', fontSize:25, fontWeight:'700', fontFamily:FONT.MEDIUM}}>Get Started</Text>
                 </TouchableOpacity>
             </View>
         </ImageBackground>
