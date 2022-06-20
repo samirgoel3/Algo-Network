@@ -1,10 +1,11 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONT, Screens} from '../../Constants';
+import remoteConfig from '@react-native-firebase/remote-config';
+
 
 const GetStartScreen = (props)=>{
     return<View style={styles.rootView}>
-
         <ImageBackground style={{ width:'100%', height:'100%'}}
                          resizeMode={'cover'}
                          source={{uri:'https://i.ibb.co/jZVCLwW/splash-background.png'}}>
@@ -15,12 +16,19 @@ const GetStartScreen = (props)=>{
                 <TouchableOpacity style={{ borderRadius:30, backgroundColor:'#8ED25E', paddingLeft:10, paddingRight:10, paddingTop:10, paddingBottom:10, width:180, marginTop:20, alignItems:'center'}}
                                   onPress={()=>{
                                       props.navigation.replace(Screens.LoginScreen)
+                                      // test()
                                   }}>
                     <Text style={{color:'#02191B', fontSize:25, fontWeight:'700', fontFamily:'Nunito-Medium'}}>Get Started</Text>
                 </TouchableOpacity>
             </View>
         </ImageBackground>
     </View>
+}
+
+const test = async ()=>{
+    const awesomeNewFeature = await remoteConfig().getValue('awesome_new_feature');
+    alert(JSON.stringify(awesomeNewFeature))
+
 }
 
 

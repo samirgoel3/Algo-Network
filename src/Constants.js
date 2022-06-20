@@ -18,6 +18,8 @@ import BackArrowWhite from '../assets/icons/back-arrow-white.svg';
 import Send from '../assets/icons/send-white.svg';
 import Up from '../assets/icons/up.svg';
 import Down from '../assets/icons/down.svg';
+import Facebook from '../assets/icons/facebook.svg';
+import Google from '../assets/icons/google.svg';
 
 
 export const Colors = {
@@ -32,6 +34,7 @@ export const Colors = {
     BLUE: '#5D5FEE',
     GREY: '#BABBC3',
     LIGHT: '#aaaaaa',
+    LIGHT_GREY: '#dedede',
     DARK_BLUE: '#7978B5',
     RED: 'red',
     EASY:'#A2AF3D',
@@ -61,6 +64,8 @@ export const ICONS = {
     Send:Send,
     Up:Up,
     Down:Down,
+    Facebook:Facebook,
+    Google:Google,
 
 }
 
@@ -92,6 +97,8 @@ export const Screens = {
     LoginScreen: 'LoginScreen',
     SplashScreen: 'SplashScreen',
     SpecificAlgoScreen: 'SpecificAlgoScreen',
+    VerifyEmailScreen: 'VerifyEmailScreen',
+    ResetPassword: 'ResetPassword',
 
 
 }

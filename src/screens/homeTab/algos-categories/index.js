@@ -10,23 +10,24 @@ const AlgosCategories = ()=>{
     const [isLoading, setLoading] = React.useState(false)
     const[categories, setCategories] = React.useState([])
 
-    const fetchAlgoCategories = ()=>{
+    const fetchAlgoCategories = async ()=>{
         setLoading(true)
-        services.FeedsService.getAlgoCategories()
-            .then((response)=>{
-                setLoading(false)
-                setCategories(response.data.response)
-            })
-            .catch((error)=>{
-                setLoading(false)
-                alert(error.message)
-            })
+        try{
+            const response = await services.FeedsService.getAlgoCategories();
+            setLoading(false)
+            if(response) setCategories(response.data.response)
+        }catch (e){
+            setLoading(false)
+            alert(e.message)
+        }
     }
     useEffect(()=>{fetchAlgoCategories()}, [])
 
+    const header = ()=>{return(<Text style={styles.headerText}>Top Algo Categories..</Text>)}
+
     return(
         <View>
-            <Text style={styles.headerText}>Top Algo Categories</Text>
+            { isLoading?header():categories?header():null}
             {isLoading?
             <LoadingSkeletonView/> : categories?<CategoryHorizontalScrollView data={categories}/> :null
             }

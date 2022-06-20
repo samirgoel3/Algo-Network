@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
 import { FONT, Colors} from '../Constants';
-const Button = ({title, onPress = () => {}}) => {
+const Button = ({title, onPress = () => {}, backgroundColor, textColor, borderRadius}) => {
     return (
         <TouchableOpacity
             onPress={onPress}
@@ -9,13 +9,13 @@ const Button = ({title, onPress = () => {}}) => {
             style={{
                 height: 55,
                 width: '100%',
-                backgroundColor: Colors.GREEN_BACKGROUND,
+                backgroundColor: backgroundColor?backgroundColor:Colors.GREEN_BACKGROUND,
                 marginVertical: 20,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderRadius:25
+                borderRadius:borderRadius?borderRadius:25
             }}>
-            <Text style={{color: Colors.WHITE, fontFamily:FONT.BOLD, fontSize: 18}}>
+            <Text style={{color:textColor?textColor:Colors.WHITE, fontFamily:FONT.BOLD, fontSize: 18}}>
                 {title}
             </Text>
         </TouchableOpacity>

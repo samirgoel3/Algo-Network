@@ -1,6 +1,6 @@
 import React from 'react';
-import {Keyboard, Text, View} from 'react-native';
-import {Colors, FONT, ICON_NAME, Screens} from '../../Constants';
+import {Keyboard, Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {Colors, FONT, ICON_NAME, Screens, ICONS} from '../../Constants';
 import Input from '../../common-components/Input';
 import Button from '../../common-components/Button';
 import Loader from '../../common-components/Loader';
@@ -83,7 +83,7 @@ const LoginScreenScreen = ()=>{
     return(
         <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-end', backgroundColor:Colors.GREEN_BACKGROUND }}>
             <Loader visible={isLoading}/>
-            <Text style={{color:'#ffffff', fontSize:35, fontFamily:'Nunito-ExtraBold', marginBottom:0, marginLeft:10}}>Login </Text>
+            <Text style={{color:'#ffffff', fontSize:35, fontFamily:FONT.EXTRA_BOLD, marginBottom:0, marginLeft:10}}>Login </Text>
             <Text style={{color:'#ffffff', fontSize:14, fontFamily:FONT.REGULAR, marginBottom:10, marginLeft:10}}>Enter your details below.</Text>
             <View style={{flex:0.9, width:'100%', backgroundColor:'#ffffff', borderTopLeftRadius:20, borderTopRightRadius:20, padding:15}}>
 
@@ -101,12 +101,31 @@ const LoginScreenScreen = ()=>{
                        onChangeText={ (val)=>{ handleInputs(val,'password')}}
                 />
 
+                <TouchableOpacity onPress={()=>{ navigation.navigate(Screens.VerifyEmailScreen)}}>
+                    <Text style={styles.forget_password}>Forget Password ?</Text>
+                </TouchableOpacity>
+
+
+
 
                 <Button title={'Login'}
                         onPress={()=>{handleOnContinue()}}/>
 
+                <Text style={{alignSelf:'center', marginBottom:10, color:Colors.GREY}}>Or sign in with </Text>
+
+                <View style={styles.social_container}>
+                    <TouchableOpacity style={{backgroundColor:Colors.LIGHT_GREY, padding:10, alignItems:'center', justifyContent:'center', borderRadius:50, marginRight:20}}>
+                        <ICONS.Facebook width={25} height={25}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{backgroundColor:Colors.LIGHT_GREY, padding:10, alignItems:'center', justifyContent:'center', borderRadius:50}}>
+                        <ICONS.Google width={25} height={25}/>
+                    </TouchableOpacity>
+                </View>
+
+
                 <Text
-                    style={{ fontFamily:FONT.REGULAR, color:Colors.GREY, fontSize:14, alignSelf:'center'}}
+                    style={{ fontFamily:FONT.REGULAR, color:Colors.GREY, fontSize:14, alignSelf:'center',marginBottom:20}}
                     onPress={()=>{handleOnSignUpClick()}}>
                     Don't have an account
                     <Text style={{fontFamily:FONT.BOLD, color:Colors.GREEN_BACKGROUND}}> Sign up</Text>
@@ -119,7 +138,28 @@ const LoginScreenScreen = ()=>{
     function handleOnContinue(){
         validate()
     }
+
+
 }
 
+const styles = StyleSheet.create({
+    forget_password:{color:Colors.GREEN_BACKGROUND, fontFamily:FONT.EXTRA_BOLD, alignSelf:'flex-end'},
+    sign_with_text: {
+        color:Colors.GREY,
+        alignSelf:'center'
+    }, social_container: {
+        flexDirection:'row',
+        alignItems:'flex-start',
+        paddingTop:10,
+        justifyContent:'center',
+        flex:1,
+        marginBottom:50
+    }, circular_button: {
+        height:50,
+        backgroundColor:Colors.GREY
+    },
+
+
+})
 
 export default LoginScreenScreen ;

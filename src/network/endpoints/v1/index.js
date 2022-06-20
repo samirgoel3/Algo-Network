@@ -1,5 +1,7 @@
-const LOGIN  = "/login";
-const SIGNUP  = "/signup";
+const LOGIN  = "user/login";
+const SIGNUP  = "user/create";
+const CHECK_EMAIL  = "user/check-email";
+const RESET_PASSWORD  = "user/reset-password";
 const ALGO_CATEGORIES  = "/algo-categories";
 
-export default {LOGIN, SIGNUP, ALGO_CATEGORIES}
+export default {LOGIN, SIGNUP, ALGO_CATEGORIES, CHECK_EMAIL, RESET_PASSWORD}
