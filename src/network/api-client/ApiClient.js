@@ -1,5 +1,6 @@
 import axios from 'axios';
 import perf from '@react-native-firebase/perf';
+import {AsyncStorage} from 'react-native';
 
 const apiClient = ()=>{
     const REACT_APP_API_URL  = "http://44.206.245.7:3000/api/v1/";
@@ -33,10 +34,15 @@ const apiClient = ()=>{
 
     const axiosInstance = axios.create({
         baseURL: REACT_APP_API_URL,
-        headers:getHeader()
+        headers:{
+            "Content-Type":"application/json",
+            "Authorization":AUTHORIZATION,
+            "x-access-token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2NTU3ODM4MzB9.GcHzUEyTjttVQasJUh5zYiGeGYiKrM0Nu15Kurta9pM',
+        }
     });
 
     axiosInstance.interceptors.request.use(async function (config) {
+        console.log("************  HEADERS--> "+JSON.stringify(config.headers))
         try {
             const httpMetric = perf().newHttpMetric(config.url, config.method);
             config.metadata = { httpMetric };

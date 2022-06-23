@@ -2,7 +2,7 @@ import React from 'react';
 import {ScrollView, View} from 'react-native';
 import DescriptionView from './DescriptionView';
 
-const ProblemStatementScreen = ()=>{
+const ProblemStatementScreen = ({data})=>{
     const MockData = [
         {
             heading:'Climbing the Leaderboard',
@@ -52,7 +52,7 @@ const ProblemStatementScreen = ()=>{
     return(
         <ScrollView>
             <View>
-                {MockData.map((data, index)=>{
+                {data.map((data, index)=>{
                     return (
                         <View key={index}>
                             <DescriptionView data={data} />

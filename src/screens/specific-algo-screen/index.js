@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import Chip from '../../common-components/Chip';
 import {Colors, FONT, ICONS} from '../../Constants';
 import {useNavigation} from '@react-navigation/native';
+import LoadingSpecificAlgoSkeleton from './LoadingSpecificAlgoSkeleton';
+import AlgoService from '../../network/services/algo-service';
 import ProblemStatementScreen from './ProblemStatementScreen';
 import SolutionScreen from './SolutionScreen';
 
@@ -10,8 +12,19 @@ const SpecificAlgoScreen = ()=>{
 
 
     const [isProblemSelected, selectProblem] = React.useState(true)
+    const [isLoading, setLoading] = React.useState(false)
+    const [problem, setProblem] = React.useState([])
 
     const nav = useNavigation()
+
+    useEffect(()=>{
+        try{
+            fetchAlgorithmById()
+        }catch (e){
+            alert(e.message)
+        }
+    }, [])
+
 
     const setHeader = ()=>{
         nav.setOptions({
@@ -41,12 +54,38 @@ const SpecificAlgoScreen = ()=>{
         })
     }
 
+    const fetchAlgorithmById = async()=>{
+        try{
+            setLoading(true)
+            const data = await AlgoService.AlgoService.getAlgorithm('62b4ba96f8e339ff4db70035')
+            setLoading(false)
+            if(!data){ alert("Something went wrong") }
+            else{
+                if(data.data.result === 1){
+                    // alert(""+data.data.response)
+                    setProblem(data.data.response.problem, ()=>{
+                        alert(problem.length)
+                    })
+
+                }else{
+                    alert(data.data.message )
+                }
+            }
+
+        }catch (e){
+            setLoading(false)
+            alert(e.message)
+        }
+    }
+
+
+
+
     return(
         <SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
             <View style={{flex:1, height:'100%'}}>
                 {setHeader()}
-                {isProblemSelected?<ProblemStatementScreen/>:<SolutionScreen/>}
-
+                {isLoading ? <LoadingSpecificAlgoSkeleton/> : isProblemSelected?<ProblemStatementScreen data={problem}/>:<SolutionScreen/>}
             </View>
         </SafeAreaView>
     )
