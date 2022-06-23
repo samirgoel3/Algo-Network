@@ -1,26 +1,36 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const onLogin = (email, password)=>{
+const onLogin = (userName, email, userImage, token)=>{
     return async (dispatch) =>{
-        const mToken = email+"_"+password
-        await AsyncStorage.setItem('token',mToken);
+        await AsyncStorage.setItem('user_name',userName);
+        await AsyncStorage.setItem('user_image',userImage);
+        await AsyncStorage.setItem('email',email);
+        await AsyncStorage.setItem('token',token);
         dispatch({
             type:'login',
             payload:{
-                token:""+mToken
+                user_name:userName,
+                user_image:userImage,
+                email:email,
+                token:token
             }
         })
     }
 }
 
-const onSignUp = (email, password)=>{
+const onSignUp = (userName, email, userImage, token)=>{
     return async (dispatch) =>{
-        const mToken = email+"_"+password
-        await AsyncStorage.setItem('token',mToken);
+        await AsyncStorage.setItem('user_name',userName);
+        await AsyncStorage.setItem('user_image',userImage);
+        await AsyncStorage.setItem('email',email);
+        await AsyncStorage.setItem('token',token);
         dispatch({
             type:'signup',
             payload:{
-                token:""+mToken
+                user_name:userName,
+                user_image:userImage,
+                email:email,
+                token:token
             }
         })
     }
@@ -32,6 +42,9 @@ const onSignOut = ()=>{
         dispatch({
             type:'sign-out',
             payload:{
+                user_name:'',
+                user_image:'',
+                email:'',
                 token:''
             }
         })
@@ -39,7 +52,6 @@ const onSignOut = ()=>{
 }
 
 const checkLogin = () =>{
-    console.log("Check login ...")
     return async (dispatch)=>{
         const data = await AsyncStorage.getItem('token')
         dispatch({

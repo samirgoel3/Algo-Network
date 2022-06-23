@@ -23,18 +23,20 @@ const ErrorComponent = ()=>{
             ref={refRBSheet}
             closeOnDragDown={true}
             closeOnPressMask={false}
+            onClose={()=>{dispatch(actions.ErrorDialogActions.clearError())}}
+            onOpen={()=>{console.log("Opening Error dialog..")}}
             customStyles={{
-                wrapper: {backgroundColor: "transparent"},
-                draggableIcon: {backgroundColor: "#000"}
+                wrapper: {backgroundColor: "rgba(0,0,0,0.68)"},
+                draggableIcon: {backgroundColor: Colors.GREEN_BACKGROUND}
             }}>
 
 
             <View style={{alignItems:'center', padding:20}}>
-                <ICONS.Facebook width={40} height={40}/>
+                <ICONS.Error width={40} height={40}/>
                 <Text style={{fontSize:20, fontFamily:FONT.EXTRA_BOLD,color:Colors.BLACK_MUTED, marginTop:10}}> {stateData.errorDialogData.header} </Text>
                 <Text style={styles.description_text}>{stateData.errorDialogData.description}   </Text>
                 <TouchableOpacity style={styles.BUTTON_PRIMARY} onPress={()=>{
-                    dispatch(actions.ErrorDialogActions.showError({header:"", description:"", show:false}))
+
                     refRBSheet.current.close()
                 }}>
                     <Text style={styles.button_text_style}>Ok</Text>

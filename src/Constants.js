@@ -20,6 +20,7 @@ import Up from '../assets/icons/up.svg';
 import Down from '../assets/icons/down.svg';
 import Facebook from '../assets/icons/facebook.svg';
 import Google from '../assets/icons/google.svg';
+import Error from '../assets/icons/error.svg';
 
 
 export const Colors = {
@@ -66,6 +67,7 @@ export const ICONS = {
     Down:Down,
     Facebook:Facebook,
     Google:Google,
+    Error:Error
 
 }
 

@@ -15,6 +15,27 @@ const ErrorDialogReducer = (state = initialState, action)=>{
             description:action.payload.description,
             show: action.payload.show
         };
+    }if(action.type === 'clear_Error'){
+        return {
+            ...initialState,
+            header:action.payload.header,
+            description:action.payload.description,
+            show: action.payload.show
+        };
+    }if(action.type === 'show_Exception'){
+        return {
+            ...initialState,
+            header:action.payload.header,
+            description:action.payload.description,
+            show: action.payload.show
+        };
+    }if(action.type === 'show_no_data_from_api'){
+        return {
+            ...initialState,
+            header:action.payload.header,
+            description:action.payload.description,
+            show: action.payload.show
+        };
     }else{
         return state;
     }

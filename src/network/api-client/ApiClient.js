@@ -38,7 +38,6 @@ const apiClient = ()=>{
 
     axiosInstance.interceptors.request.use(async function (config) {
         try {
-            console.log("REQUEST:  --> "+JSON.stringify(config))
             const httpMetric = perf().newHttpMetric(config.url, config.method);
             config.metadata = { httpMetric };
 
@@ -65,6 +64,7 @@ const apiClient = ()=>{
                 httpMetric.setHttpResponseCode(response.status);
                 httpMetric.setResponseContentType(response.headers['content-type']);
                 await httpMetric.stop();
+
             } finally {
                 return response;
             }

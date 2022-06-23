@@ -6,12 +6,17 @@ import Button from '../../common-components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Loader from '../../common-components/Loader';
 import Services from '../../network/services';
+import ErrorComponent from '../../common-components/ErrorComponent';
+import {useDispatch} from 'react-redux';
+import {actions} from '../../states/action-creators';
+
 const VerifyEmail = ()=>{
 
     const [error, setError] = React.useState();
     const navigation = useNavigation()
     const [isLoading, setLoading] = React.useState(false);
     const [inputs, setInputs] = React.useState("");
+    const dispatch = useDispatch()
 
 
     function handleInputs(text){
@@ -19,18 +24,26 @@ const VerifyEmail = ()=>{
         setError( "")
     }
 
-    const fetchEmailVerification =  (email)=>{
-        setLoading(true)
-        // const response = await Services.LoginService.checkEmail(email)
-        Services.LoginService.checkEmail(email)
-            .then((response)=>{
-                setLoading(false)
-                navigation.replace(Screens.ResetPassword, {reset_key:response.data.response.reset_key})
-            })
-            .catch((e)=>{
-                setLoading(false)
-                alert(JSON.stringify(e.message))
-            })
+    const fetchEmailVerification = async  (email)=>{
+        try{
+            setLoading(true)
+            const data = await Services.LoginService.checkEmail(email)
+            setLoading(false)
+            if(!data){
+                dispatch(actions.ErrorDialogActions.showNoDataFromApi())
+            }else{
+                if(data.data.result === 1){
+                    navigation.replace(Screens.ResetPassword, {reset_key:data.data.response.reset_key})
+                }else{
+                    dispatch(actions.ErrorDialogActions.showError({header:"Verification Failed", description:""+data.data.message, show:true}))
+                }
+            }
+
+        }catch (e){
+            dispatch(actions.ErrorDialogActions.showException(e.message))
+            setLoading(false)
+
+        }
 
     }
 
@@ -57,6 +70,7 @@ const VerifyEmail = ()=>{
 
     return (<SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
         <Loader visible={isLoading}/>
+        <ErrorComponent/>
         <View style={{flexDirection:'row', padding:10, alignItems:'center'}}>
             <ICONS.BackArrowWhite width={20} height={20} marginRight={20} onPress={()=>{navigation.goBack()}}/>
             <Text style={{fontFamily:FONT.BOLD, color:Colors.WHITE, fontSize:35}}>Verify Email</Text>

@@ -2,8 +2,8 @@ import apiClient from '../../api-client/ApiClient';
 import Endpoints from '../../endpoints';
 
 class AuthService {
-    login = () => apiClient().post(""+Endpoints.v1.LOGIN);
-    signup = () => apiClient().post(""+Endpoints.v1.SIGNUP);
+    login = ({email, password}) => apiClient().post(""+Endpoints.v1.LOGIN, {email, password});
+    signup = ({email, password, username}) => apiClient().post(""+Endpoints.v1.SIGNUP, {email, password, username});
     checkEmail = (email) => apiClient().post(""+Endpoints.v1.CHECK_EMAIL, {email});
 }
 

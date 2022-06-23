@@ -6,9 +6,9 @@ import Button from '../../common-components/Button';
 import Loader from '../../common-components/Loader';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {actions} from '../../states/action-creators';
 import ErrorComponent from '../../common-components/ErrorComponent';
+import Services from '../../network/services';
 
 const LoginScreenScreen = ()=>{
     const navigation = useNavigation();
@@ -67,19 +67,25 @@ const LoginScreenScreen = ()=>{
         navigation.navigate(Screens.SignUpScreen)
     }
 
-    const login = () => {
+    const login = async () => {
 
-        setLoader(true)
-        setTimeout(() => {
-            try {
-                setLoader(false);
-                // dispatch(actions.authenticationActions.onLogin(inputs.email, inputs.password))
-                dispatch(actions.ErrorDialogActions.showError({header:"Something Wrong", description:"Oops something bad happens with API response", show:true}))
-
-            } catch (error) {
-                alert('Error', 'Something went wrong');
+        try{
+            setLoader(true)
+            const response = await Services.LoginService.login({email:inputs.email, password:inputs.password})
+            setLoader(false)
+            if(!response){
+                dispatch(actions.ErrorDialogActions.showNoDataFromApi())
+            } else{
+                if(response.data.result === 1){
+                    dispatch(actions.authenticationActions.onLogin(response.data.response.username,response.data.response.email,response.data.response.image,response.data.response.token))
+                } else{
+                    dispatch(actions.ErrorDialogActions.showError({header:"Login Failed", description:""+response.data.message, show:true}))
+                }
             }
-        }, 1000);
+        }catch (e){
+            setLoader(false)
+            dispatch(actions.ErrorDialogActions.showException(e.message))
+        }
     };
 
 

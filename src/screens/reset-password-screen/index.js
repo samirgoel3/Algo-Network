@@ -4,6 +4,7 @@ import {Colors, FONT, ICON_NAME, ICONS} from '../../Constants';
 import Input from '../../common-components/Input';
 import Button from '../../common-components/Button';
 import {useNavigation} from '@react-navigation/native';
+import ErrorComponent from '../../common-components/ErrorComponent';
 
 const VerifyEmail = ({route})=>{
 
@@ -12,6 +13,7 @@ const VerifyEmail = ({route})=>{
 
     return (<SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
         {alert(""+route.params.reset_key)}
+        <ErrorComponent/>
         <View style={{flexDirection:'row', padding:10, alignItems:'center'}}>
             <ICONS.BackArrowWhite width={20} height={20} marginRight={20} onPress={()=>{navigation.goBack()}}/>
             <Text style={{fontFamily:FONT.BOLD, color:Colors.WHITE, fontSize:35}}>Reset Password</Text>
@@ -39,9 +41,11 @@ const VerifyEmail = ({route})=>{
         </View>
 
 
-
-
     </SafeAreaView>)
+
+
+
+
 }
 
 const handleOnVerifyEmail = ()=>{

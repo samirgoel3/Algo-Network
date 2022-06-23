@@ -4,6 +4,10 @@ import { FONT, ICON_NAME, Screens, Colors} from '../../Constants';
 import Input from '../../common-components/Input';
 import Button from '../../common-components/Button';
 import Loader from '../../common-components/Loader';
+import Services from '../../network/services';
+import {useDispatch} from 'react-redux';
+import {actions} from '../../states/action-creators';
+import ErrorComponent from '../../common-components/ErrorComponent';
 
 const SignUpScreen = ({navigation})=>{
 
@@ -18,6 +22,7 @@ const SignUpScreen = ({navigation})=>{
         password:""
     })
     const [isLoading, setLoader] = React.useState(false);
+    const dispatch = useDispatch();
 
     function handleInputs(text, inputKey){
         setInputs(prevState => ({...prevState, [inputKey]: text}))
@@ -53,29 +58,35 @@ const SignUpScreen = ({navigation})=>{
             handleError('Min password length of 5', 'password');
             isValid = false;
         }
-
-        if (isValid) {
-            register();
-        }
+        if (isValid) {fetchRegister();}
     };
 
-    const register = () => {
-
-        setLoader(true)
-        setTimeout(() => {
-            try {
-                setLoader(false);
-                navigation.replace(Screens.TabScreen);
-            } catch (error) {
-                alert('Error', 'Something went wrong');
+    const fetchRegister = async () => {
+        try{
+            setLoader(true)
+            const data = await Services.LoginService.signup({email:inputs.email,password:inputs.password, username:inputs.username})
+            setLoader(false)
+            if(!data){
+                dispatch(actions.ErrorDialogActions.showNoDataFromApi())
+            } else{
+                if(data.data.result === 1){
+                    dispatch(actions.authenticationActions.onSignUp(data.data.response.username,data.data.response.email,data.data.response.image,data.data.response.token))
+                }
+                else{
+                    dispatch(actions.ErrorDialogActions.showError({header:"Account Creation Failed", description:""+data.data.message, show:true}))
+                }
             }
-        }, 1000);
+        }catch (e){
+            setLoader(false)
+            dispatch(actions.ErrorDialogActions.showException(e.message))
+        }
     };
 
 
     return(
         <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-end', backgroundColor:Colors.GREEN_BACKGROUND }}>
             <Loader visible={isLoading}/>
+            <ErrorComponent/>
             <Text style={{color:'#ffffff', fontSize:35, fontFamily:'Nunito-ExtraBold', marginBottom:0, marginLeft:10}}>Create Account</Text>
             <Text style={{color:'#ffffff', fontSize:14, fontFamily:FONT.REGULAR, marginBottom:10, marginLeft:10}}>Enter your details to create account.</Text>
             <View style={{flex:0.9, width:'100%', backgroundColor:'#ffffff', borderTopLeftRadius:20, borderTopRightRadius:20, padding:15}}>
