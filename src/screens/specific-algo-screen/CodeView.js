@@ -9,7 +9,7 @@ const CodeView = ({code})=>{
 
     return(
         <View style={{ borderRadius:40, margin:10}}>
-            <Text>{code}</Text>
+            {/*<Text style={{color:'#ffffff'}}>{code}</Text>*/}
         {/*<CodeEditor*/}
         {/*    style={{*/}
         {/*        fontSize: 9,*/}

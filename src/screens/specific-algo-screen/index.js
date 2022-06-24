@@ -14,6 +14,7 @@ const SpecificAlgoScreen = ()=>{
     const [isProblemSelected, selectProblem] = React.useState(true)
     const [isLoading, setLoading] = React.useState(false)
     const [problem, setProblem] = React.useState([])
+    const [solution, setSolution] = React.useState([])
 
     const nav = useNavigation()
 
@@ -63,9 +64,8 @@ const SpecificAlgoScreen = ()=>{
             else{
                 if(data.data.result === 1){
                     // alert(""+data.data.response)
-                    setProblem(data.data.response.problem, ()=>{
-                        alert(problem.length)
-                    })
+                    setProblem(data.data.response.problem)
+                    setSolution(data.data.response.solution)
 
                 }else{
                     alert(data.data.message )
@@ -85,7 +85,7 @@ const SpecificAlgoScreen = ()=>{
         <SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
             <View style={{flex:1, height:'100%'}}>
                 {setHeader()}
-                {isLoading ? <LoadingSpecificAlgoSkeleton/> : isProblemSelected?<ProblemStatementScreen data={problem}/>:<SolutionScreen/>}
+                {isLoading ? <LoadingSpecificAlgoSkeleton/> : isProblemSelected?<ProblemStatementScreen data={problem}/>:<SolutionScreen data={solution}/>}
             </View>
         </SafeAreaView>
     )

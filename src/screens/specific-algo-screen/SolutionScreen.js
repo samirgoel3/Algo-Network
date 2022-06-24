@@ -5,44 +5,18 @@ import CodeView from './CodeView';
 import LanguageSelectorView from './LanguageSelectorView';
 import CodeEditor from '@rivascva/react-native-code-editor';
 
-const SolutionScreen = ()=>{
+const SolutionScreen = ({data})=>{
 
-    const MockSolutions = [
-        {
-            language:'JAVA',
-            solutions:[
-                {code:'This is Java solution one'},
-                {code:'This is Java solution two'},
-                {code:'This is Java solution three'},
-                {code:'This is Java solution four'},
-            ]
-        },
-        {
-            language:'Javascript',
-            solutions:[
-                {code:'This is JS solution one'},
-                {code:'This is JS solution two'},
-                {code:'This is JS solution three'},
-            ]
-        },
-        {
-            language:'Swift',
-            solutions:[
-                {code:'This is Swift solution one'},
-                {code:'This is Swift solution two'},
-            ]
-        },
-    ]
 
     const [selectedSolutionPosition, setSelectedSolutionPosition] = React.useState(0)
     const [selectedLanguagePosition, setLanguagePosition] = React.useState(0)
 
     const getSolutionAccordingToSelectedLanguage = (position)=>{
-        return MockSolutions[position].solutions;
+        return data[position].solutions;
     }
 
     const getCodeAccordingToSelectedSolution = ()=>{
-        return MockSolutions[selectedLanguagePosition].solutions[selectedSolutionPosition].code
+        return data[selectedLanguagePosition].solutions[selectedSolutionPosition].code
     }
 
     const handleOnLanguageChange = (position)=>{
@@ -81,14 +55,12 @@ const SolutionScreen = ()=>{
         </ScrollView>
 
 
-        <LanguageSelectorView languages={MockSolutions} onLanguageSelect={(langauge, position)=>{handleOnLanguageChange(position)}}/>
+        <LanguageSelectorView languages={data} onLanguageSelect={(langauge, position)=>{handleOnLanguageChange(position)}}/>
 
     </View>)
 
 
 }
-
-
 
 const styles = StyleSheet.create({
     solutionTextStyle_SELECTED:{fontSize: 18, fontFamily: FONT.EXTRA_BOLD, color:Colors.GREEN_LIGHT, marginRight:10  }
