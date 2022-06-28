@@ -13,7 +13,7 @@ const AlgosCategories = ()=>{
     const fetchAlgoCategories = async ()=>{
         setLoading(true)
         try{
-            const response = await services.FeedsService.getAlgoCategories();
+            const response = await services.AlgoService.getAlgoCategories();
             setLoading(false)
             if(response) setCategories(response.data.response)
         }catch (e){
