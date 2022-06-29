@@ -15,6 +15,7 @@ import {store} from './src/states';
 import remoteConfig from '@react-native-firebase/remote-config';
 import OneSignal from 'react-native-onesignal';
 import analytics from '@react-native-firebase/analytics';
+import ErrorComponent from './src/common-components/ErrorComponent';
 
 
 const App: () => Node = () => {
@@ -63,6 +64,7 @@ const App: () => Node = () => {
 
     return (
         <Provider store={store}>
+
             <NavigationContainer
                 ref={navigationRef}
                 // onReady={()=>{alert(navigationRef.current.getCurrentRoute().name)}}
@@ -79,6 +81,7 @@ const App: () => Node = () => {
                 routeNameRef.current = currentRouteName;
             }}
             >
+                <ErrorComponent/>
                 <OverAllStack/>
             </NavigationContainer>
         </Provider>

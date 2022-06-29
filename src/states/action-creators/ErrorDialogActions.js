@@ -7,7 +7,7 @@ const showError = (data)=>{
             payload:{
                 header:data.header,
                 description:data.description,
-                show:data.show
+                show:true
             }
         })
     }

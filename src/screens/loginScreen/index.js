@@ -7,7 +7,6 @@ import Loader from '../../common-components/Loader';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {actions} from '../../states/action-creators';
-import ErrorComponent from '../../common-components/ErrorComponent';
 import Services from '../../network/services';
 
 const LoginScreenScreen = ()=>{
@@ -92,7 +91,6 @@ const LoginScreenScreen = ()=>{
     return(
         <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-end', backgroundColor:Colors.GREEN_BACKGROUND }}>
             <Loader visible={isLoading}/>
-            <ErrorComponent/>
             <Text style={{color:'#ffffff', fontSize:35, fontFamily:FONT.EXTRA_BOLD, marginBottom:0, marginLeft:10}}>Login </Text>
             <Text style={{color:'#ffffff', fontSize:14, fontFamily:FONT.REGULAR, marginBottom:10, marginLeft:10}}>Enter your details below.</Text>
             <View style={{flex:0.9, width:'100%', backgroundColor:'#ffffff', borderTopLeftRadius:20, borderTopRightRadius:20, padding:15}}>

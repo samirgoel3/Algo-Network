@@ -6,7 +6,6 @@ import Button from '../../common-components/Button';
 import {useNavigation} from '@react-navigation/native';
 import Loader from '../../common-components/Loader';
 import Services from '../../network/services';
-import ErrorComponent from '../../common-components/ErrorComponent';
 import {useDispatch} from 'react-redux';
 import {actions} from '../../states/action-creators';
 
@@ -70,7 +69,6 @@ const VerifyEmail = ()=>{
 
     return (<SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
         <Loader visible={isLoading}/>
-        <ErrorComponent/>
         <View style={{flexDirection:'row', padding:10, alignItems:'center'}}>
             <ICONS.BackArrowWhite width={20} height={20} marginRight={20} onPress={()=>{navigation.goBack()}}/>
             <Text style={{fontFamily:FONT.BOLD, color:Colors.WHITE, fontSize:35}}>Verify Email</Text>
