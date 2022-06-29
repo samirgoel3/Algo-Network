@@ -5,5 +5,6 @@ const RESET_PASSWORD  = "user/reset-password";
 const ALGO_CATEGORIES  = "/algo-categories";
 const GET_ALGO  = "/algorithm";
 const GET_ALGO_CATEGORIES  = "/algo-category";
+const GET_ALGO_BY_CATEGORY  = "/algorithm/list";
 
-export default {LOGIN, SIGNUP, ALGO_CATEGORIES, CHECK_EMAIL, RESET_PASSWORD, GET_ALGO, GET_ALGO_CATEGORIES}
+export default {LOGIN, SIGNUP, ALGO_CATEGORIES, CHECK_EMAIL, RESET_PASSWORD, GET_ALGO, GET_ALGO_CATEGORIES, GET_ALGO_BY_CATEGORY}

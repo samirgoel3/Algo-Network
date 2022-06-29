@@ -14,10 +14,9 @@ const CategoryHorizontalScrollView = (data)=>{
                     return (
                         <View style={[styles.root, {backgroundColor:item.color?item.color :Colors.LIGHT} ]} key={key}>
                             {/*<Image source={{uri:item.backGround}} style={styles.backGroundStyling}/>*/}
-                            <TouchableOpacity style={styles.transparentBackground} onPress={()=>{ navigation.navigate(Screens.AlgoListScreen, {name:"Array Cat."})}}>
+                            <TouchableOpacity style={styles.transparentBackground} onPress={()=>{ navigation.navigate(Screens.AlgoListScreen, {name:item.name, category_id:item._id})}}>
                                 <Text style={styles.textStyling}>{item.name + " ("+ 89 +")"}</Text>
                             </TouchableOpacity>
-
                         </View>
                     )
                 })}

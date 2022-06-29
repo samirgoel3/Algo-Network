@@ -1,5 +1,5 @@
 import React from 'react';
-import {Colors} from '../../Constants';
+import {Colors, HomeScreenTabs, Screens} from '../../Constants';
 import RecenetChatList from './recent-chats/RecenetChatList';
 import {ScrollView, View} from 'react-native';
 import AlgosCategories from './algos-categories';
@@ -10,7 +10,7 @@ const HomeTabScreen = ({navigation})=>{
     return(
         <View style={{ flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
             <ScrollView style={{flex:1, padding:10}} showsVerticalScrollIndicator={false}>
-                <Search/>
+                <Search onPress={()=>{navigation.navigate(Screens.SearchScreen)}}/>
                 <AlgosCategories/>
                 <RecenetChatList navigation={navigation}/>
                 <LatestReleaseAlgos/>

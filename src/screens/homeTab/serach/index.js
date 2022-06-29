@@ -1,13 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
-import {ICONS, Colors, FONT} from '../../../Constants';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Colors, FONT, ICONS} from '../../../Constants';
 
-const SearchBar = ()=>{
+const SearchBar = ({onPress = ()=>{}})=>{
     return(
-        <View style={styles.rootView}>
+        <TouchableOpacity style={styles.rootView} onPress={onPress}>
+
             <ICONS.Search width={20} height={20}/>
             <Text style={styles.textStyle}> Search Algorithm</Text>
-        </View>
+        </TouchableOpacity>
     )
 }
 

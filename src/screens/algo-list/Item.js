@@ -5,14 +5,14 @@ import Utils from '../../utils';
 import Chip from '../../common-components/Chip';
 import {useNavigation} from '@react-navigation/native';
 
-const Item = ({data})=>{
+const Item = ({heading , description , level, algorithmId})=>{
     const navigation = useNavigation();
     return (
-        <TouchableOpacity style={[styles.blockLayout,{margin:10}]}  onPress={()=>{navigation.navigate(Screens.SpecificAlgoScreen)}}>
-            <Text style={styles.textStyle_HEADER} numberOfLines={3} ellipsizeMode={'tail'}>Heading Goes here</Text>
-            <Text style={styles.textStyle_DESCRIPTION} numberOfLines={3} ellipsizeMode={'tail'}>Some long description about the algorithm will goes here accordingly </Text>
+        <TouchableOpacity style={[styles.blockLayout,{margin:10}]}  onPress={()=>{navigation.navigate(Screens.SpecificAlgoScreen, {algorithmId})}}>
+            <Text style={styles.textStyle_HEADER} numberOfLines={3} ellipsizeMode={'tail'}>{heading}</Text>
+            <Text style={styles.textStyle_DESCRIPTION} numberOfLines={3} ellipsizeMode={'tail'}>{description}</Text>
             <View style={{flexDirection:'row', marginTop:5, alignItems:'flex-end', justifyContent:'flex-end'}}>
-                <Chip value={""+Utils.getStringAccordingToAlgoLevel(3)} color={Utils.getColourAccordingToAlgoLevel(3)} textStyle={{fontFamily:FONT.EXTRA_BOLD, fontSize:10}}/>
+                <Chip value={""+Utils.getStringAccordingToAlgoLevel(level)} color={Utils.getColourAccordingToAlgoLevel(level)} textStyle={{fontFamily:FONT.EXTRA_BOLD, fontSize:10}}/>
             </View>
         </TouchableOpacity>
     )

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Dimensions, SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
 import Chip from '../../common-components/Chip';
 import {Colors, FONT, ICONS} from '../../Constants';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import LoadingSpecificAlgoSkeleton from './LoadingSpecificAlgoSkeleton';
 import AlgoService from '../../network/services/algo-service';
 import ProblemStatementScreen from './ProblemStatementScreen';
@@ -20,10 +20,12 @@ const SpecificAlgoScreen = ()=>{
     const [apiError, setApiError] = React.useState(null)
 
     const nav = useNavigation()
+    const route = useRoute()
+    const { algorithmId } = route.params;
 
     useEffect(()=>{
         try{
-            fetchAlgorithmById()
+            fetchAlgorithmById(algorithmId)
         }catch (e){
             alert(e.message)
         }
@@ -111,11 +113,11 @@ const SpecificAlgoScreen = ()=>{
         else{ return getHeaderView()}
     }
 
-    const fetchAlgorithmById = async()=>{
+    const fetchAlgorithmById = async(algorithmId)=>{
         try{
             setLoading(true)
             setApiError(null)
-            const data = await AlgoService.AlgoService.getAlgorithm('62b4ba96f8e339ff4db70035')
+            const data = await AlgoService.AlgoService.getAlgorithm(""+algorithmId)
             setLoading(false)
             if(!data){ alert("Something went wrong") }
             else{

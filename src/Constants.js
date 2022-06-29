@@ -22,6 +22,7 @@ import Facebook from '../assets/icons/facebook.svg';
 import Google from '../assets/icons/google.svg';
 import Error from '../assets/icons/error.svg';
 import NoInternet from '../assets/icons/no-internet.svg';
+import NoData from '../assets/icons/no-data.svg';
 
 
 export const Colors = {
@@ -70,6 +71,7 @@ export const ICONS = {
     Google:Google,
     Error:Error,
     NoInternet:NoInternet,
+    NoData:NoData,
 
 }
 
@@ -104,6 +106,7 @@ export const Screens = {
     VerifyEmailScreen: 'VerifyEmailScreen',
     ResetPassword: 'ResetPassword',
     AlgoListScreen: 'AlgoListScreen',
+    SearchScreen: 'SearchScreen',
 
 
 }

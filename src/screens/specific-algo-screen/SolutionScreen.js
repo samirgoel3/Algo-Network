@@ -1,12 +1,20 @@
 import React from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Image, ImageBackground, useWindowDimensions} from 'react-native';
 import {Colors, FONT, ICONS} from '../../Constants';
 import CodeView from './CodeView';
 import LanguageSelectorView from './LanguageSelectorView';
 import CodeEditor from '@rivascva/react-native-code-editor';
+import RenderHtml from 'react-native-render-html';
+
+const renderersProps = {
+    img: {
+        enableExperimentalPercentWidth: true
+    }
+};
 
 const SolutionScreen = ({data})=>{
 
+    const source = {html: `<p><img src="https://i.ibb.co/bsDVsSh/tester.png" alt="" /></p>`};
 
     const [selectedSolutionPosition, setSelectedSolutionPosition] = React.useState(0)
     const [selectedLanguagePosition, setLanguagePosition] = React.useState(0)
@@ -16,7 +24,7 @@ const SolutionScreen = ({data})=>{
     }
 
     const getCodeAccordingToSelectedSolution = ()=>{
-        return data[selectedLanguagePosition].solutions[selectedSolutionPosition].code
+        return {html:data[selectedLanguagePosition].solutions[selectedSolutionPosition].code}
     }
 
     const handleOnLanguageChange = (position)=>{
@@ -39,6 +47,7 @@ const SolutionScreen = ({data})=>{
         />
     }
 
+    const { width } = useWindowDimensions();
 
     return(<View style={{flex:1}}>
 
@@ -52,8 +61,12 @@ const SolutionScreen = ({data})=>{
 
         <ScrollView>
             <CodeView code={getCodeAccordingToSelectedSolution()}/>
-        </ScrollView>
 
+            <View style={{backgroundColor:Colors.GREEN_BACKGROUND_LIGHT, borderRadius:6, margin:8, paddingLeft:10}}>
+                <RenderHtml contentWidth={width} source={getCodeAccordingToSelectedSolution()}
+                            renderersProps={renderersProps}/>
+            </View>
+        </ScrollView>
 
         <LanguageSelectorView languages={data} onLanguageSelect={(langauge, position)=>{handleOnLanguageChange(position)}}/>
 

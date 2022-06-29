@@ -1,11 +1,12 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {Text, useWindowDimensions, View} from 'react-native';
 import {Colors, FONT, ICONS} from '../../Constants';
 import CollapsibleView from '@eliav2/react-native-collapsible-view'
+import RenderHtml from 'react-native-render-html';
 
 
 const DescriptionView = ({data})=>{
-
+    const { width } = useWindowDimensions();
     const [isCollpase, setCollapse] = React.useState(false)
 
     const getNonCollapsableView = ()=>{
@@ -25,11 +26,13 @@ const DescriptionView = ({data})=>{
                              collapsibleProps={{ onAnimationEnd: () => setCollapse(!isCollpase) }}
                              title={
                 <View style={{ flex:1, justifyContent:'space-between', flexDirection:'row'}}>
+                    <RenderHtml contentWidth={width} source={data.heading}/>
                     <Text style={{fontFamily:FONT.EXTRA_BOLD, fontSize:20, color:Colors.WHITE}} >{data.heading}</Text>
                     {isCollpase?<ICONS.Up width={20} height={20}/>:<ICONS.Down width={20} height={20}/>}
                 </View>}>
 
-                <Text style={{fontFamily:FONT.MEDIUM, color:Colors.WHITE, fontSize:12}}>{data.description}</Text>
+                {/*<Text style={{fontFamily:FONT.MEDIUM, color:Colors.WHITE, fontSize:12}}>{data.description}</Text>*/}
+                <RenderHtml contentWidth={width} source={{html:data.description}}/>
 
             </CollapsibleView>
         )

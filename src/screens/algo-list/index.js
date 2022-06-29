@@ -7,17 +7,16 @@ import AlgoService from '../../network/services/algo-service';
 import NoInternetRetryComponent from '../../common-components/NoInternetRetryComponent';
 import SkeletonListLoading from './SkeletonListLoading';
 
-const MockAlgos = ["","","","","", "","","","",""]
-
 
 const AlgoList = ()=>{
 
     const nav = useNavigation()
     const route = useRoute()
-    const { name, id } = route.params;
+    const { name, category_id } = route.params;
+    const [algorithms, setAlgorithms] = React.useState();
 
-    const getItem = ()=>{
-        return <Item/>
+    const getItem = ({item, index})=>{
+        return <Item heading={item.problem[0].heading} description={item.problem[0].description} level={item.level} algorithmId={item._id} />
     }
 
     const [apiHandler, setApiHandler] = React.useState({
@@ -25,7 +24,7 @@ const AlgoList = ()=>{
         apiError:null
     })
 
-    useEffect(()=>{fetchCategoryDetails()}, [])
+    useEffect(()=>{fetchAlgoByCategoryId()}, [])
 
 
     const setHeader = ()=>{
@@ -44,10 +43,10 @@ const AlgoList = ()=>{
         })
     }
 
-    const fetchCategoryDetails = async ()=>{
+    const fetchAlgoByCategoryId = async ()=>{
         try{
             setApiHandler({loading: true, apiError: null})
-            const data = await AlgoService.AlgoService.getAlgorithm('62b4ba96f8e339ff4db70035')
+            const data = await AlgoService.AlgoService.getAlgoListByCategory(""+category_id)
 
             if(!data){
                 setApiHandler({loading: false, apiError: "Some problem in api response"})
@@ -55,6 +54,7 @@ const AlgoList = ()=>{
             else{
                 if(data.data.result === 1){
                     setApiHandler({loading: false, apiError: null})
+                    setAlgorithms(data.data.response)
                 }else{
                     setApiHandler({loading: false, apiError: data.data.message})
                 }
@@ -68,9 +68,9 @@ const AlgoList = ()=>{
         <SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}}>
             {setHeader()}
             {apiHandler.loading? <SkeletonListLoading/> :
-            apiHandler.apiError ? <NoInternetRetryComponent error={apiHandler.apiError} onRetryClick={()=>{fetchCategoryDetails()}}/> :
+            apiHandler.apiError ? <NoInternetRetryComponent error={apiHandler.apiError} onRetryClick={()=>{fetchAlgoByCategoryId()}}/> :
                 <View >
-                    <FlatList data={MockAlgos} renderItem={getItem}/>
+                    <FlatList data={algorithms} renderItem={getItem}/>
                 </View>
             }
         </SafeAreaView>

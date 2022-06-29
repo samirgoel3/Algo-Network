@@ -7,6 +7,7 @@ import ChatScreen from '../screens/chat-screen';
 import {useSelector} from 'react-redux';
 import SpecificAlgoScreen from '../screens/specific-algo-screen';
 import AlgoListScreen from '../screens/algo-list';
+import SearchScreen from '../screens/search-screen';
 
 const AppStack = ()=>{
     const Stack = createNativeStackNavigator();
@@ -45,6 +46,13 @@ const AppStack = ()=>{
             <Stack.Screen
                 name={Screens.AlgoListScreen}
                 component={AlgoListScreen}
+                options={{
+                    headerShown:true,
+                    headerTitle:''}}/>
+
+            <Stack.Screen
+                name={Screens.SearchScreen}
+                component={SearchScreen}
                 options={{
                     headerShown:true,
                     headerTitle:''}}/>
