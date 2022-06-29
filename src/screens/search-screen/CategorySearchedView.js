@@ -1,18 +1,28 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {Colors, FONT} from '../../Constants';
+import {Text, TouchableOpacity, View} from 'react-native';
+import {Colors, FONT, Screens} from '../../Constants';
+import {useNavigation} from '@react-navigation/native';
 
 
-const CategorySearchedView = ()=>{
+const CategorySearchedView = ({data})=>{
+    const navigation = useNavigation()
     return (
-        <View style={{flexDirection:'row', alignItems:'center', marginTop:10, marginHorizontal:15}}>
-            <View style={{padding:10, backgroundColor:Colors.GREEN_BACKGROUND_LIGHT, alignItems:'center', borderRadius:6, justifyContent:'center'}}>
-                <Text style={{color:Colors.WHITE, fontFamily:FONT.BOLD, fontSize:10}}>Array</Text>
-            </View>
-            <View>
-                <Text style={{color:Colors.WHITE, fontFamily:FONT.BOLD, fontSize:15, marginLeft:10}}>Find all algos in Array</Text>
-            </View>
+        <View>
+            {
+                data.map((item, index)=>{
+                    return(
+                        <TouchableOpacity style={{flexDirection:'row', alignItems:'center', marginTop:10, marginHorizontal:15}} key={index} onPress={()=>{navigation.navigate(Screens.AlgoListScreen, {name:item.name, category_id:item._id}  )}}>
+                            <View style={{padding:10, backgroundColor:item.color, alignItems:'center', borderRadius:6, justifyContent:'center'}}>
+                                <Text style={{color:Colors.WHITE, fontFamily:FONT.BOLD, fontSize:10}}>{item.name}</Text>
+                            </View>
+                            <View>
+                                <Text style={{color:Colors.WHITE, fontFamily:FONT.BOLD, fontSize:15, marginLeft:10}}>Find all Algos in {item.name}</Text>
+                            </View>
 
+                        </TouchableOpacity>
+                    )
+                })
+            }
         </View>
     )
 }

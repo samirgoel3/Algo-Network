@@ -42,7 +42,7 @@ const apiClient = ()=>{
     });
 
     axiosInstance.interceptors.request.use(async function (config) {
-        console.log("************  HEADERS--> "+JSON.stringify(config.headers))
+        console.log("************ REQUEST TYPE:"+config.method+"\n"+"************ API URL: "+config.baseURL+config.url+"\n************ PARAMETERS: "+JSON.stringify(config.data))
         try {
             const httpMetric = perf().newHttpMetric(config.url, config.method);
             config.metadata = { httpMetric };

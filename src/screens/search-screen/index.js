@@ -6,6 +6,8 @@ import ProgressView from './ProgressView';
 import NoDataView from './NoDataView';
 import CategorySearchedView from './CategorySearchedView';
 import AlgorithmSearchedView from './AlgorithmSearchedView';
+import Services from '../../network/services';
+import axios from 'axios';
 
 
 const SearchScreen = ()=>{
@@ -26,28 +28,68 @@ const SearchScreen = ()=>{
             headerRight:()=>(null)
         })
     }
+    const [apiResponse, setApiResponse] = React.useState({
+        loading:false,
+        errorMessage:null,
+        data:null
+    })
 
 
+
+    const getViewAccordingToData = () =>{
+        return (
+            <View>
+                <CategorySearchedView data={apiResponse.data.categoryData}/>
+                <AlgorithmSearchedView data={apiResponse.data.algorithmData}/>
+            </View>
+        )
+    }
+
+    const fetchSearchApi = async (keyToSearch)=>{
+        try{
+            let cancelToken
+            //Check if there are any previous pending requests
+            if (typeof cancelToken != typeof undefined) {
+                cancelToken.cancel("Operation canceled due to new request.")
+            }
+            cancelToken = axios.CancelToken.source()
+
+            setApiResponse({loading:true, errorMessage:null,data: null})
+            const response = await Services.AlgoService.getSearchAlgorithmClient(keyToSearch, cancelToken.token)
+            if(!response){
+                setApiResponse({loading:false, errorMessage:"Problem in api response",data: null})
+            }else{
+                if(response.data.result == 0){
+                    setApiResponse({loading:false, errorMessage:response.data.message,data: null})
+                }else{
+                    setApiResponse({loading:false, errorMessage:null,data:response.data.response})
+                }
+            }
+        }catch (e){
+
+            setApiResponse({loading:false, errorMessage:e.message,data: null})
+        }
+    }
 
 
     return (
-        <SafeAreaView style={{flex:1, backgroundColor:Colors.GREEN_BACKGROUND}} >
-            <View ></View>
+        <SafeAreaView style={{flex: 1, backgroundColor: Colors.GREEN_BACKGROUND}}>
+            <View></View>
             {setHeader()}
             <TextInput
-                style={{ backgroundColor:Colors.WHITE, height:49, borderRadius:10, margin:10, padding:15}}
+                style={{backgroundColor: Colors.WHITE, height: 49, borderRadius: 10, margin: 10, padding: 15}}
                 placeholder={'Search your algo or category'}
-                onChangeText={(e)=>{}}
+                onChangeText={(e) => {e.length >0 ? fetchSearchApi(e) : null}}
             />
             <ScrollView>
-                <ProgressView/>
-                <NoDataView/>
-                <CategorySearchedView/>
-                <AlgorithmSearchedView/>
+                {apiResponse.loading?<ProgressView/>:null}
+                {apiResponse.errorMessage ? <NoDataView message={apiResponse.errorMessage}/>: null }
+                {apiResponse.data ? getViewAccordingToData():null }
+
             </ScrollView>
 
         </SafeAreaView>
-    )
+    );
 }
 
 export default SearchScreen;

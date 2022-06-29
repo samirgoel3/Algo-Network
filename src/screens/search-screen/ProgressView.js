@@ -3,7 +3,7 @@ import {ProgressBar} from 'react-native-paper';
 import {Colors} from '../../Constants';
 import {View} from 'react-native';
 const ProgressView = ()=>{
-    return(<View style={{marginHorizontal:65}}>
+    return(<View style={{marginHorizontal:18}}>
         <ProgressBar color={Colors.WHITE} indeterminate/>
     </View>)
 }
