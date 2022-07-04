@@ -8,8 +8,24 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {actions} from '../../states/action-creators';
 import Services from '../../network/services';
+import {GoogleSignin, GoogleSigninButton, statusCodes,} from '@react-native-google-signin/google-signin';
+
 
 const LoginScreenScreen = ()=>{
+
+    GoogleSignin.configure({
+        scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+        webClientId: '975121093549-otk155p806v4k4aphj88l2b12udls1d2.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+        offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+        hostedDomain: '', // specifies a hosted domain restriction
+        forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+        accountName: '', // [Android] specifies an account name on the device that should be used
+        iosClientId: '975121093549-q4pn0odegkmdvg94vb5q97j9ld05168n.apps.googleusercontent.com', // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+        googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
+        openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
+        profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
+    });
+
     const navigation = useNavigation();
 
     const dispatch = useDispatch()
@@ -87,6 +103,31 @@ const LoginScreenScreen = ()=>{
         }
     };
 
+    const performGoogleSignIn = async () => {
+        try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            // this.setState({ userInfo });
+            alert(JSON.stringify(userInfo))
+        } catch (error) {
+
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+                // operation (e.g. sign in) is in progress already
+                dispatch(actions.ErrorDialogActions.showError({header:"Google Login Failed", description:"It seems like login is already in under process"}))
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                // play services not available or outdated
+                dispatch(actions.ErrorDialogActions.showError({header:"Google Login Failed", description:"Google play service is not available."}))
+            } else if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+                // play services not available or outdated
+                dispatch(actions.ErrorDialogActions.showError({header:"Google Login Failed", description:"Sign in Required"}))
+            } else {
+                dispatch(actions.ErrorDialogActions.showError({header:"Google Login Failed", description:"Unable to perform google login"}))
+
+            }
+        }
+    };
+
 
     return(
         <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'flex-end', backgroundColor:Colors.GREEN_BACKGROUND }}>
@@ -126,7 +167,9 @@ const LoginScreenScreen = ()=>{
                         <ICONS.Facebook width={25} height={25}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{backgroundColor:Colors.LIGHT_GREY, padding:10, alignItems:'center', justifyContent:'center', borderRadius:50}}>
+                    <TouchableOpacity style={{backgroundColor:Colors.LIGHT_GREY, padding:10, alignItems:'center', justifyContent:'center', borderRadius:50}} onPress={()=>{
+                        performGoogleSignIn()
+                    }}>
                         <ICONS.Google width={25} height={25}/>
                     </TouchableOpacity>
                 </View>

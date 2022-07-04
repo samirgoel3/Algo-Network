@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FONT, Screens} from '../../Constants';
 import remoteConfig from '@react-native-firebase/remote-config';
+import crashlytics from '@react-native-firebase/crashlytics';
+
+
 
 const GetStartScreen = (props)=>{
+
+    useEffect(() => {
+        crashlytics().log('App mounted.');
+    }, []);
 
 
     return<View style={styles.rootView}>
@@ -17,7 +24,6 @@ const GetStartScreen = (props)=>{
                 <TouchableOpacity style={{ borderRadius:30, backgroundColor:'#8ED25E', paddingLeft:10, paddingRight:10, paddingTop:10, paddingBottom:10, width:180, marginTop:20, alignItems:'center'}}
                                   onPress={()=>{
                                       props.navigation.replace(Screens.LoginScreen)
-                                      // test()
                                   }}>
                     <Text style={{color:'#02191B', fontSize:25, fontWeight:'700', fontFamily:FONT.MEDIUM}}>Get Started</Text>
                 </TouchableOpacity>
